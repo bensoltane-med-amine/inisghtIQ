@@ -53,7 +53,6 @@ DB_PASSWORD="abDX69x6YHrurkyio0aK"
 DB_HOST="34.66.214.223"
 DB_PORT=5432
 
-table_name = "All_Drives"
 json_file_name = "W_FileAnalysis_03-08-2022-13_51_22.json"
 json_file_path = os_path.join(".", "data", json_file_name)
 table_name = json_file_name.split(".")[0]
@@ -92,7 +91,7 @@ class UploadJsonToSql:
     def openJsonFile(self):
         try:
             #json_file_path = "G:\\free-work\\datavoss\\RFA_json_to_table\\data\F_FileAnalysis_11-10-2022-13_52_13.json"
-            query = ('insert into public."'+table_name+'"( '\
+            query_insert = ('insert into public."'+table_name+'"( '\
                     ' "Mod_Age", "Dormant_Age_Sort", "Dormant_Age_Group", "Dormant_Age", "File_Age_Sort", "File_Age_Group", "'\
                     'File_Age", "File_Size_Group", "File_Size", "Last_Write_Time", "Last_Access_Time", "Creation_Time", "'\
                     'Drive_Label", "Username", "Drive_Serial_Number", "File_Size_Sort", "System_File", "Extension", "'\
@@ -100,12 +99,15 @@ class UploadJsonToSql:
                     ' VALUES \n')
             with open(json_file_path, 'r') as f:
                 sql_file = open(table_name+".sql", "w")
-                sql_file.write(query)
+                sql_file.write(query_insert)
                 i = 0
                 for line in f:
                     row_data = json.loads(line)
-                    if i > 600000:
-                        break
+                    if i > 400000:
+                        #break
+                        i = 0
+                        query = query_insert
+                        sql_file.write(";\n"+query)
                     if i > 0:
                         i += 1
                         query = (" ,('"+str(row_data['Mod_Age'])+"', '"+str(row_data['Dormant_Age_Sort'])+"', '"+str(row_data['Dormant_Age_Group'])+"', '"+str(row_data['Dormant_Age'])+"', "\
