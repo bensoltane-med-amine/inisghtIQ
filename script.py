@@ -91,6 +91,16 @@ class UploadJsonToSql:
     def openJsonFile(self):
         try:
             #json_file_path = "G:\\free-work\\datavoss\\RFA_json_to_table\\data\F_FileAnalysis_11-10-2022-13_52_13.json"
+            initialConfig = ("SET statement_timeout = 0;"\
+                                "SET lock_timeout = 0;"\
+                                "SET idle_in_transaction_session_timeout = 0;"\
+                                "SET client_encoding = 'UTF8';"\
+                                "SET standard_conforming_strings = on;"\
+                                "SELECT pg_catalog.set_config('search_path', '', false);"\
+                                "SET check_function_bodies = false;"\
+                                "SET xmloption = content;"\
+                                "SET client_min_messages = warning;"\
+                                "SET row_security = off;")
             query_insert = ('insert into public."'+table_name+'"( '\
                     ' "Mod_Age", "Dormant_Age_Sort", "Dormant_Age_Group", "Dormant_Age", "File_Age_Sort", "File_Age_Group", "'\
                     'File_Age", "File_Size_Group", "File_Size", "Last_Write_Time", "Last_Access_Time", "Creation_Time", "'\
@@ -103,7 +113,7 @@ class UploadJsonToSql:
                 i = 0
                 for line in f:
                     row_data = json.loads(line)
-                    if i > 400000:
+                    if i > 50000:
                         #break
                         i = 0
                         query = query_insert
