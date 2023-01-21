@@ -58,7 +58,7 @@ json_file_path = os_path.join(".", "data", json_file_name)
 table_name = json_file_name.split(".")[0]
 
 source_blob_name = "Methodist Health Dallas/File & NAS/Isilon/insightiq_export_1674056747.zip"
-destination_file_name  = "./insightIQ"
+destination_file_name  = "./data.zip"
 
 class UploadJsonToSql:
 
