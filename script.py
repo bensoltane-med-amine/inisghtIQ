@@ -57,6 +57,9 @@ json_file_name = "W_FileAnalysis_03-08-2022-13_51_22.json"
 json_file_path = os_path.join(".", "data", json_file_name)
 table_name = json_file_name.split(".")[0]
 
+source_blob_name = "Methodist Health Dallas/File & NAS/Isilon/insightiq_export_1674056747.zip"
+destination_file_name  = "./insightIQ"
+
 class UploadJsonToSql:
 
     def __init__(self):
@@ -168,5 +171,8 @@ class UploadJsonToSql:
                     list_strings[string] = string_value
         return list_strings
 
-upload = UploadJsonToSql()
+#upload = UploadJsonToSql()
+
+download_file_from_gcp(source_blob_name,destination_file_name)
+
 
